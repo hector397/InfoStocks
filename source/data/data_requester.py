@@ -2,7 +2,7 @@ import requests
 from typing import *
 
 
-class Data_Requester:
+class DataRequester:
     def __init__(self):
         pass
 

@@ -25,7 +25,6 @@ class TestStockGetters(unittest.TestCase):
     """
     Test if open price is a float.
     """
-
     def test_get_open_price(self):
         price = self.stock.get_open_price()
 
@@ -34,7 +33,6 @@ class TestStockGetters(unittest.TestCase):
     """
     Test if close price is a float.
     """
-
     def test_get_close_price(self):
         price = self.stock.get_close_price()
 

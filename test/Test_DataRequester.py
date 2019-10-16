@@ -1,4 +1,3 @@
-import source.data.data_requester
 import unittest
 from unittest.mock import patch
 

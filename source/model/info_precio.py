@@ -10,3 +10,9 @@ class InfoPrecio:
     low: float
     close: float
     volume: int
+
+    def to_string(self) -> str:
+        return "open: " + str(self.open) + "\nhigh: " + str(self.high) + "\nlow: " + str(self.low) + \
+               "\nclose: " + str(self.close) + "\nvolume: " + str(self.volume)
+
+

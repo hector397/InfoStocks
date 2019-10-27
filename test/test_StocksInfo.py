@@ -1,5 +1,4 @@
 import unittest
-from unittest.mock import patch
 from source.model.stocks_info import StocksInfo
 from source.model.stock import Stock
 
@@ -28,21 +27,26 @@ class TestStocksInfo(unittest.TestCase):
 
         self.assertTrue(isinstance(stock, Stock))
 
+    """
+    Test that the info returned by a stock is a string
+    """
     def test_show_stock_info_existing_symbol(self):
         stock = self.stocks_info.last_info("TSLA")
 
         info_stock = stock.to_string()
-        print(info_stock)
 
-        self.assertTrue(isinstance(stock, Stock))
+        self.assertTrue(isinstance(info_stock, str))
 
+    """
+    Test that if the symbol doesn't exists, the info returned has no values.
+    """
     def test_show_stock_info_empty_symbol(self):
         stock = self.stocks_info.last_info("")
 
         info_stock = stock.to_string()
         print(info_stock)
 
-        self.assertTrue(isinstance(stock, Stock))
+        self.assertTrue(isinstance(info_stock, str))
 
 if __name__ == '__main__':
     unittest.main()

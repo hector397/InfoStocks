@@ -4,24 +4,43 @@ from source.model.stock import Stock
 from source.model.info_precio import InfoPrecio
 from typing import *
 
-
+"""
+This class models an StockInfo object that represents the last info about a Stock.
+Extends the Subject class.
+"""
 class StocksInfo(Subject):
     def __init__(self, observer: Observer):
         super().__init__()
         super()._add_observer(observer)
         self.stock = None
 
-    def last_info(self, symbol: str) -> None:
+    """
+    Returns the stock with the information of a symbol.
+    Parameters:
+        - stock: Symbol of the stock desired
+    """
+    def last_info(self, symbol: str) -> Stock:
         data = self.__get_last_stock_data(symbol)
         info_precio = self.__data_to_info_price(data)
         self.__create_stock(symbol, info_precio)
 
         return self.stock
 
+    """
+    Creates an stock object
+    Parameters:
+        - symbol: Symbol of the stock desired
+        - info_precio: Stock's information
+    """
     def __create_stock(self, symbol: str, info_precio: InfoPrecio) -> Stock:
         self.stock = Stock(symbol, info_precio)
 
 
+    """
+    Converts data into InfoPrecio object
+    Parameters:
+        - data: Dict with raw data to be converted
+    """
     def __data_to_info_price(self, data: Dict) -> InfoPrecio:
         try:
             key = self.__get_last_key_of_data(data["Time Series (1min)"])
@@ -38,6 +57,11 @@ class StocksInfo(Subject):
 
         return InfoPrecio(open, high, low, close, volume)
 
+    """
+    Get the first key of the data for retrieve the last updated info.
+    Parameters:
+        - data: Dict with raw data.
+    """
     def __get_last_key_of_data(self, data: Dict) -> str:
         return list(data.keys())[0]
 

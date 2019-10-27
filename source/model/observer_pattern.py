@@ -1,5 +1,6 @@
-from abc import ABC, abstractmethod
 from __future__ import annotations
+from abc import ABC, abstractmethod
+from typing import *
 
 
 """
@@ -8,38 +9,52 @@ This class declares a set of methods for concrete subjects
 class Subject(ABC):
 
     """
-    Add an observer to the Subject
+    Constructor for a Subject class
+    Variables:
+        - _changed: Protected attribute that represents if the state has changed
+        - _observers: List of Subject's observers
+    """
+    def __init__(self):
+        self._changed: bool = False
+        self._observers: List[Observer] = []
 
+    """
+    Add a observer
     Parameters:
-        - observer -> Observer object to be added
+        - observer: Represents a Observer object
     """
-    @abstractmethod
-    def add_observer(self, observer: Observer) -> None:
-        pass
+    def _add_observer(self, observer: Observer) -> None:
+        self._observers.append(observer)
 
     """
-    Remove an observer from de subject
-    
+    Remove a observer
     Parameters:
-        - observer -> Observer object to be removed
+            - observer: Represents a Observer object
     """
-    @abstractmethod
-    def remove_observer(self, observer: Observer) -> None:
-        pass
+    def _remove_observer(self, observer: Observer) -> None:
+        self._observers.remove(observer)
 
     """
-    Notify all observers about an event
+    Changes the state of the Subject
     """
-    @abstractmethod
-    def notify_observers(self) -> None:
-        pass
+    def _set_changed(self) -> None:
+        self._changed = True
 
     """
-    Changes the flag to indicate that the state has changed.
+    Notify observers with certain data.
+    Parameters:
+        - obj: Any object that observers need
     """
-    @abstractmethod
-    def set_changed(self) -> None:
-        pass
+    def _notify_observers(self, obj: Any) -> None:
+        if self._changed:
+            for observer in self._observers:
+                observer.update(self, obj)
+
+    """
+    Notify observers without data
+    """
+    def _notify_observers(self) -> None:
+        self.notify_observers(None)
 
 
 """
@@ -49,7 +64,10 @@ class Observer(ABC):
 
     """
     Receive an update from a subject
+    Parameters:
+        - subject: The Subject object that has the data
+        - args: The data to update
     """
     @abstractmethod
-    def update(self, subject: Subject) -> None:
+    def update(self, subject: Subject, args: Any) -> None:
         pass
